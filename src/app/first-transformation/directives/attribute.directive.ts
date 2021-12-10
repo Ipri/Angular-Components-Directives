@@ -1,6 +1,6 @@
 import { DOCUMENT } from '@angular/common';
 import { Directive, ElementRef, Inject, OnInit } from '@angular/core';
-import { delay, of, tap } from 'rxjs';
+import { delay, of, repeat, tap } from 'rxjs';
 
 @Directive({ 
     selector: '[attributeDirective]' 
@@ -13,15 +13,24 @@ export class AttributeDirective implements OnInit {
     ) {} 
     
     ngOnInit(): void { 
-        const nativeElement = this.elementRef.nativeElement;
+        const 
+            nativeElement: HTMLElement = this.elementRef.nativeElement,
+            children = Array.from(nativeElement.childNodes);
 
-        nativeElement.style.backgroundColor = 'chocolate'; 
 
-        of(null).pipe(
-            delay(3000),
-            tap(() => {
-                nativeElement.replaceChildren(this.document.createTextNode('First transformation'));
+        nativeElement.style.borderBottom = '5px solid pink'; 
+        nativeElement.style.boxShadow = 'grey 0px 13px 10px -10px';
+
+        of(nativeElement).pipe(
+            delay(2000),
+            tap(element => {
+                element.replaceChildren(this.document.createTextNode('🧒'));
             }),
+            delay(2000),
+            tap(element => {
+                element.replaceChildren(...children);
+            }),
+            repeat(3)
         ).subscribe();
     }
 }

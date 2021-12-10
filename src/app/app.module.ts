@@ -5,6 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CanonicalModule } from './canonical/canonical.module';
 import { FirstDecoratorComponent, FourthDecoratorComponent, SecondDecoratorComponent, ThirdDecoratorDirective, FifthDecoratorDirective } from './decorators';
+import { EmbeddedViewModule } from './embedded-view/embedded-view.module';
 import { FirstTransformationModule } from './first-transformation/first-transformation.module';
 import { SecondTransformationModule } from './second-transformation/second-transformation.module';
 import { ThirdTransformationModule } from './third-transformation/third-transformation.module';
@@ -33,6 +34,7 @@ import { ThirdTransformationModule } from './third-transformation/third-transfor
         FirstTransformationModule,
         SecondTransformationModule,
         ThirdTransformationModule,
+        EmbeddedViewModule,
     ],
     providers: [],
     bootstrap: [AppComponent]

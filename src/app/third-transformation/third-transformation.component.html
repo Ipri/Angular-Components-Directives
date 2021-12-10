@@ -1,11 +1,11 @@
 <div> 
     <div [attributeDirective]="label"> 
-        Attribute Decorated Content 
+        👧 
     </div>
 </div>
 
 <ng-template #label let-text="text">
-    <div style="background-color: blueviolet; color: white;">
+    <div class="label">
         {{ text }}
     </div>
 </ng-template>

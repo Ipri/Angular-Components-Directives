@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { CanonicalComponent } from './canonical/canonical.component';
+import { EmbeddedViewComponent } from './embedded-view/embedded-view.component';
 import { FirstTransformationComponent } from './first-transformation/first-transformation.component';
 import { SecondTransformationComponent } from './second-transformation/second-transformation.component';
 import { ThirdTransformationComponent } from './third-transformation/third-transformation.component';
@@ -11,6 +12,7 @@ const routes: Routes = [
     { path: 'first-transformation', component: FirstTransformationComponent },
     { path: 'second-transformation', component: SecondTransformationComponent },
     { path: 'third-transformation', component: ThirdTransformationComponent },
+    { path: 'embedded-view', component: EmbeddedViewComponent },
     { path: '**', redirectTo: 'canocal' },
 ];
 

@@ -1,6 +1,6 @@
 import { DOCUMENT } from '@angular/common';
 import { Directive, ElementRef, Inject, OnInit, ViewContainerRef } from '@angular/core';
-import { delay, of, tap } from 'rxjs';
+import { delay, map, of, repeat, tap } from 'rxjs';
 import { LabelComponent } from '../../label/label.component';
 
 @Directive({ 
@@ -15,21 +15,33 @@ export class AttributeDirective implements OnInit {
     ) {} 
     
     ngOnInit(): void { 
-        const nativeElement = this.elementRef.nativeElement;
+        const 
+            nativeElement: HTMLElement = this.elementRef.nativeElement,
+            nativeParent: HTMLElement = nativeElement.parentElement as HTMLElement,
+            children = Array.from(nativeElement.childNodes);
 
-        nativeElement.style.backgroundColor = 'chocolate'; 
+        nativeElement.style.borderBottom = '5px solid pink'; 
+        nativeElement.style.boxShadow = 'grey 0px 13px 10px -10px';
 
         of(nativeElement).pipe(
             delay(3000),
             tap(nativeElement => {
-                nativeElement.replaceChildren(this.document.createTextNode('First transformation'));
+                nativeElement.replaceChildren(this.document.createTextNode('🧒'));
             }),
             delay(3000),
-            tap(nativeElement => {
+            map(nativeElement => {
                 nativeElement.remove();
                 const labelComponentRef = this.viewContainerRef.createComponent(LabelComponent)
-                labelComponentRef.instance.text = 'Second transformation'
+                labelComponentRef.instance.text = " 👩‍🦰";
+                return labelComponentRef;
             }),
+            delay(2000),
+            tap(labelComponentRef => {
+                labelComponentRef.destroy();
+                nativeElement.replaceChildren(...children);
+                nativeParent.appendChild(nativeElement);  
+            }),
+            repeat(3)
         ).subscribe();
     }
 }
