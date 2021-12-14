@@ -19,18 +19,19 @@ export class AttributeDirective implements OnInit {
 
 
         nativeElement.style.borderBottom = '5px solid pink'; 
+        nativeElement.style.color = 'pink'; 
         nativeElement.style.boxShadow = 'grey 0px 13px 10px -10px';
 
         of(nativeElement).pipe(
             delay(2000),
             tap(element => {
-                element.replaceChildren(this.document.createTextNode('🧒'));
+                element.replaceChildren(this.document.createTextNode('2.🧒'));
             }),
             delay(2000),
             tap(element => {
                 element.replaceChildren(...children);
             }),
-            repeat(3)
+            repeat(20)
         ).subscribe();
     }
 }

@@ -7,9 +7,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CanonicalComponent implements OnInit {
 
-  constructor() { }
+    icon: string = '👧';
 
-  ngOnInit(): void {
-  }
+    constructor() { }
+
+    ngOnInit(): void {
+    }
 
 }

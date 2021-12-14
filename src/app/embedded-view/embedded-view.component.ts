@@ -5,6 +5,4 @@ import { Component, OnInit } from '@angular/core';
     templateUrl: './embedded-view.component.html',
     styleUrls: ['./embedded-view.component.scss']
 })
-export class EmbeddedViewComponent {
-    marker='👌🏻';
-}
+export class EmbeddedViewComponent {}

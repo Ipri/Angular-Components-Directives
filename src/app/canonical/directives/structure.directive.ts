@@ -1,4 +1,5 @@
-import { Directive, TemplateRef, ViewContainerRef } from "@angular/core";
+import { ChangeDetectorRef, Directive, TemplateRef, ViewContainerRef } from "@angular/core";
+import { delay, interval, take, tap, timer } from "rxjs";
 
 @Directive({ 
     selector: '[structureDirective]' 
@@ -9,8 +10,16 @@ export class StructureDirective {
         private templateRef: TemplateRef<any>, 
         private viewContainerRef: ViewContainerRef, 
     ) { 
-        if (new Date().getHours() < 21) { 
-            this.viewContainerRef.createEmbeddedView(this.templateRef); 
-        } 
+        interval(1000).pipe(
+            delay(Math.random()*1000),
+            tap(() => {
+                const view = this.viewContainerRef.get(0);
+                if (view) {
+                    this.viewContainerRef.clear()
+                } else {
+                    this.viewContainerRef.createEmbeddedView(this.templateRef)
+                }
+            }),
+        ).subscribe();
     } 
 }

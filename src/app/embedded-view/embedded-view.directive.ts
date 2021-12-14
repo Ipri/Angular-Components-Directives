@@ -1,22 +1,10 @@
-import { Directive, Input, Renderer2, TemplateRef, ViewContainerRef } from '@angular/core';
-import { delay, Observable, of, switchMap, tap } from 'rxjs';
+import { Directive, OnInit, Renderer2, TemplateRef, ViewContainerRef } from '@angular/core';
+import { delay, Observable, of, repeat, switchMap, tap } from 'rxjs';
 
 @Directive({
     selector: '[embeddedView]',
 })
-export class EmbeddedViewDirective {
-
-    public marker: string = '👋🏻';
-
-    @Input()
-    set embeddedView(marker: string) {
-        this.marker = marker;
-        this.modifyView(marker)
-    };
-
-    get embeddedView(): string {
-        return this.marker;
-    };
+export class EmbeddedViewDirective implements OnInit {
 
     constructor(
         private templateRef: TemplateRef<any>,
@@ -24,13 +12,19 @@ export class EmbeddedViewDirective {
         private render: Renderer2
     ) {}
 
-    modifyView(marker: string): void {
-        of(marker).pipe(
-            switchMap(marker => this.createViewFirst(marker)),
+    ngOnInit(): void {
+        this.modifyView()
+    }
+
+    modifyView(): void {
+        of(null).pipe(
+            switchMap(() => this.createViewFirst('🤚')),
             delay(1000),
-            switchMap(marker => this.createViewSecond(marker)),
+            switchMap(() => this.createViewSecond('👌')),
             delay(1000),
-            switchMap(marker => this.createViewThird(marker))
+            switchMap(() => this.createViewThird()),
+            delay(1000),
+            repeat(20)
         ).subscribe()
     }
 
@@ -73,8 +67,8 @@ export class EmbeddedViewDirective {
         );
     }
 
-    createViewThird(marker: string): Observable<any> {
-        return of(marker).pipe(
+    createViewThird(): Observable<any> {
+        return of(null).pipe(
             tap(() => this.viewContainer.createEmbeddedView(this.templateRef)),
             delay(1000),
             tap(() => this.viewContainer.createEmbeddedView(this.templateRef)),

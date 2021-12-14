@@ -24,18 +24,19 @@ export class AttributeDirective implements OnInit {
             children = Array.from(nativeElement.childNodes);
 
         nativeElement.style.borderBottom = '5px solid pink'; 
+        nativeElement.style.color = 'pink';
         nativeElement.style.boxShadow = 'grey 0px 13px 10px -10px';
 
         of(nativeElement).pipe(
             delay(2000),
             tap(nativeElement => {
-                nativeElement.replaceChildren(this.document.createTextNode('🧒'));
+                nativeElement.replaceChildren(this.document.createTextNode('2.🧒'));
             }),
             delay(2000),
             map(nativeElement => {
                 nativeElement.remove();
                 const labelComponentRef = this.viewContainerRef.createComponent(LabelComponent)
-                labelComponentRef.instance.text = " 👩‍🦰"
+                labelComponentRef.instance.text = "3. 👩‍🦰"
                 return labelComponentRef;
             }),
             delay(2000),
@@ -43,7 +44,7 @@ export class AttributeDirective implements OnInit {
                 labelComponentRef.destroy();
                 this.viewContainerRef.createEmbeddedView(
                     this.attributeDirective as TemplateRef<any>, 
-                    { text: '👸' }
+                    { text: '4.👸' }
                 );
                 return this.viewContainerRef;
             }),
@@ -53,7 +54,7 @@ export class AttributeDirective implements OnInit {
                 nativeElement.replaceChildren(...children);
                 nativeParent.appendChild(nativeElement);  
             }),
-            repeat(3)
+            repeat(20)
         ).subscribe();
     }
 }
